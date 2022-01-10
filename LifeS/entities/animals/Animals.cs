@@ -114,7 +114,7 @@ namespace LifeS
 
             switch (direction)
             {
-                case Direction.left:
+                case Direction.Left:
                     if (x - 1 >= 0)
                     {
                         x--;
@@ -122,28 +122,28 @@ namespace LifeS
                     }
 
                     break;
-                case Direction.up:
+                case Direction.Up:
                     if (y - 1 >= 0)
                     {
                         y--;
                         changed = true;
                     }
                     break;
-                case Direction.right:
+                case Direction.Right:
                     if (x + 1 < xSize)
                     {
                         x++;
                         changed = true;
                     }
                     break;
-                case Direction.down:
+                case Direction.Down:
                     if (y + 1 < ySize)
                     {
                         y++;
                         changed = true;
                     }
                     break;
-                case Direction.none:
+                case Direction.None:
                     break;
             }
             satiety--;
@@ -153,23 +153,23 @@ namespace LifeS
         {
             if (a.x - _x < 0)
             {
-                return Direction.left;
+                return Direction.Left;
             }
             else if (a.x - _x > 0)
             {
-                return Direction.right;
+                return Direction.Right;
             }
             else if (a.y - _y < 0)
             {
-                return Direction.up;
+                return Direction.Up;
             }
             else if (a.y - _y > 0)
             {
-                return Direction.down;
+                return Direction.Down;
             }
             else if (a.y == _y && a.x == _x)
-                return Direction.samePosition;
-            return Direction.none;
+                return Direction.SamePosition;
+            return Direction.None;
         }
 
         private void EatSmth(int _x, int _y, Entity en)
@@ -193,21 +193,21 @@ namespace LifeS
 
             en = FindTarget<Target>(ref field, type);
 
-            Direction direction = Direction.none;
+            Direction direction = Direction.None;
             if (en != null)
                 direction = MoveToTarget(en, x, y);
-            if (direction == Direction.samePosition && type == TypeOfTarget.ForFood)
+            if (direction == Direction.SamePosition && type == TypeOfTarget.ForFood)
             {
                 EatSmth(x, y, en);
             }
-            if (direction == Direction.samePosition && type == TypeOfTarget.ForReproduction)
+            if (direction == Direction.SamePosition && type == TypeOfTarget.ForReproduction)
             {
                 DoChild(x, y, field, en);
 
             }
             else
             {
-                if (direction == Direction.none)
+                if (direction == Direction.None)
                     PanicMove(field.GetLength(0), field.GetLength(1));
                 else
                     Move(field.GetLength(0), field.GetLength(1), direction);

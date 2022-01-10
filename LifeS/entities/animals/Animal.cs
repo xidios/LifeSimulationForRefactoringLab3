@@ -26,9 +26,9 @@ namespace LifeS
 
 
             if (random.Next(2) == 0)
-                gender = Gender.male;
+                gender = Gender.Male;
             else
-                gender = Gender.female;
+                gender = Gender.Female;
         }
 
         public abstract void DoSomething(int _x, int _y, Cell[,] field);

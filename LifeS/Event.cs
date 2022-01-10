@@ -36,13 +36,13 @@ namespace LifeS
                 if (field[x, y].entity.Count > 0)               
                     KillAllEntities(field[x, y].entity);                              
 
-                if (direction == Direction.right)
+                if (direction == Direction.Right)
                     x++;
-                else if (direction == Direction.left)
+                else if (direction == Direction.Left)
                     x--;
-                else if (direction == Direction.up)
+                else if (direction == Direction.Up)
                     y--;
-                else if (direction == Direction.down)
+                else if (direction == Direction.Down)
                     y++;
 
                 distanse--;

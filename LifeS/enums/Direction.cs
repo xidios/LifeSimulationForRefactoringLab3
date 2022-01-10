@@ -8,11 +8,11 @@ namespace LifeS
 {
     public enum Direction
     {
-        left,
-        up,
-        right,
-        down,
-        none,
-        samePosition
+        Left,
+        Up,
+        Right,
+        Down,
+        None,
+        SamePosition
     }
 }

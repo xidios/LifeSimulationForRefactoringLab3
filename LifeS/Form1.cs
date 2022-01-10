@@ -67,7 +67,7 @@ namespace LifeS
         private void ColorChange(Animal a, int x, int y)
         {
             (Brush, Brush) colors = ColorsForType(a);
-            if (a.gender == Gender.female)
+            if (a.gender == Gender.Female)
                 graphics.FillRectangle(colors.Item1, x * resolution, y * resolution, resolution, resolution);
             else
                 graphics.FillRectangle(colors.Item2, x * resolution, y * resolution, resolution, resolution);
@@ -156,7 +156,7 @@ namespace LifeS
                 humanSatiety.Text = $"Satiety: {observedHuman.satiety}";
                 status.Text = $"Status: {((observedHuman.satiety == 0) ? "Dead" : "Alive")}";
                 labelTimeChild.Text = $"Time from last child: {observedHuman.timeLastChild}";
-                sex.Text = $"Sex: {((observedHuman.gender == Gender.male) ? "Male" : "Female")}";
+                sex.Text = $"Sex: {((observedHuman.gender == Gender.Male) ? "Male" : "Female")}";
             }
             else
             {
@@ -220,7 +220,7 @@ namespace LifeS
                 humanSatiety.Text = $"Satiety: {observedHuman.satiety}";
                 status.Text = $"Status: {((observedHuman.satiety == 0) ? "Dead" : "Alive")}";// $"{x} {y}"                 
                 labelTimeChild.Text = $"Time from last child: {observedHuman.timeLastChild}";
-                sex.Text = $"Sex: {((observedHuman.gender == Gender.male) ? "Male" : "Female")}";
+                sex.Text = $"Sex: {((observedHuman.gender == Gender.Male) ? "Male" : "Female")}";
                 animalType.Text = $"Type: {observedHuman.GetType().Name}";
 
             }
