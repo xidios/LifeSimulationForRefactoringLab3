@@ -31,11 +31,11 @@ namespace LifeS
         }
         private void StartGame()
         {
-            
+
             buttonStart.Text = "RESTART";
             buttonPause.Text = "Pause";
             //sp.SoundLocation = "plants_vs_zombies.wav";
-            
+
             sp.Play();//music start
 
             labelTimeChild.Text = null;
@@ -50,21 +50,21 @@ namespace LifeS
                 rows: rows,
                 cols: cols,
                 density: density
-                ) ;
+                );
 
 
-            Text = $"Generation {gameEngine.CurrentGeneration}";
+            UpdateFormInformationAboutCurrentGeneration();
 
             BitmapChange();
             timer1.Start();
         }
 
         private void BitmapChange()
-        {           
+        {
             pictureBox1.Image = new Bitmap(cols * resolution, rows * resolution);//создаем битмап. Новую картинку // pictureBox1.Width, pictureBox1.Height
             graphics = Graphics.FromImage(pictureBox1.Image);//передали картинку из прошлой строчки
         }
-        private void ColorChange(Animal a,int x,int y)
+        private void ColorChange(Animal a, int x, int y)
         {
             (Brush, Brush) colors = ColorsForType(a);
             if (a.gender == Gender.female)
@@ -86,16 +86,12 @@ namespace LifeS
             {
                 return (Brushes.DeepPink, Brushes.Plum);
             }
-            return (null,null);
+            return (null, null);
         }
         private void DrawGeneration()
         {
-            if (resolution != (int)Resolution.Value)
-            {
-                resolution = (int)Resolution.Value;
-                BitmapChange();
-            }
-                graphics.Clear(Color.Black);//очищаем игровое поле
+            UpdateBitmapIfResolutionChanged();
+            graphics.Clear(Color.Black);//очищаем игровое поле
             var field = gameEngine.NextGeneration();
 
             for (int x = 0; x < field.GetLength(0); x++)
@@ -107,21 +103,36 @@ namespace LifeS
 
                 }
             }
+            DrawMapEvents();
+            ObservedHuman();
+            UpdateFormInformationAboutCurrentGeneration();
+            pictureBox1.Refresh();
+        }
+        private void UpdateFormInformationAboutCurrentGeneration()
+        {
+            Text = $"Generation {gameEngine.CurrentGeneration}";
+            totalOfAnimals.Text = $"Total of animals: {gameEngine.TotalOfAnimals}";
+        }
+        private void UpdateBitmapIfResolutionChanged()
+        {
+            if (resolution != (int)Resolution.Value)
+            {
+                resolution = (int)Resolution.Value;
+                BitmapChange();
+            }
+        }
+
+        private void DrawMapEvents()
+        {
             if (gameEngine.mapEvents != null)
             {
                 foreach (Event e in gameEngine.mapEvents)
-                    if(e.exist)
+                    if (e.exist)
                         graphics.FillRectangle(Brushes.Gold, e.x * resolution, e.y * resolution, resolution, resolution);
             }
-
-            ObservedHuman();
-
-            Text = $"Generation {gameEngine.CurrentGeneration}";
-            totalOfAnimals.Text = $"Total of animals: {gameEngine.TotalOfAnimals}";
-
-            pictureBox1.Refresh();
         }
-        private void FillMap(ref Cell[,] field,int x, int y) {
+        private void FillMap(ref Cell[,] field, int x, int y)
+        {
             if (field[x, y].plant != null && field[x, y].plant.alive)
             {
                 graphics.FillRectangle(Brushes.Green, x * resolution, y * resolution, resolution, resolution);
@@ -145,7 +156,7 @@ namespace LifeS
                 humanSatiety.Text = $"Satiety: {observedHuman.satiety}";
                 status.Text = $"Status: {((observedHuman.satiety == 0) ? "Dead" : "Alive")}";
                 labelTimeChild.Text = $"Time from last child: {observedHuman.timeLastChild}";
-                sex.Text = $"Sex: {((observedHuman.gender == Gender.male) ? "Male" : "Female")}";                
+                sex.Text = $"Sex: {((observedHuman.gender == Gender.male) ? "Male" : "Female")}";
             }
             else
             {
@@ -169,22 +180,22 @@ namespace LifeS
             StartGame();
         }
 
-       
+
 
         private void buttonPause_Click(object sender, EventArgs e)
         {
             if (timer1.Enabled)
-            {                
+            {
                 timer1.Stop();
                 sp.Stop();
                 buttonPause.Text = "Continue";
             }
-            else if(!timer1.Enabled)
-            {               
+            else if (!timer1.Enabled)
+            {
                 timer1.Start();
                 sp.Play();
                 buttonPause.Text = "Pause";
-            }           
+            }
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
