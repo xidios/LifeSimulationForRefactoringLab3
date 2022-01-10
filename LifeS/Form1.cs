@@ -235,10 +235,9 @@ namespace LifeS
         }
         private void MouseRightClickCreateEvent(MouseEventArgs e)
         {
-
             int x = e.Location.X / resolution;
             int y = e.Location.Y / resolution;
-            gameEngine.CreateEvent(x, y);
+            gameEngine.CreateEventByMouse(x, y);
         }
     }
 

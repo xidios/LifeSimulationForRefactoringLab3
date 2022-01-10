@@ -203,13 +203,11 @@ namespace LifeS
             mapEvents = _mapEvents;
         }
 
-        public void CreateEvent(int x, int y)
+        public void CreateEventByMouse(int x, int y)
         {
             Event ev = new Event(random,field);
             mapEvents.Add(ev);
-            ev.x = x;
-            ev.y = y;
-            ev.KillTheAll(field);           
+            ev.MouseEvent(x, y, field);
         }
 
     }

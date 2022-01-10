@@ -57,5 +57,15 @@ namespace LifeS
                 e.Dead();           
 
         }
+        private void UpdateCoordinates(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+        public void MouseEvent(int x, int y, Cell[,] field)
+        {
+            UpdateCoordinates(x, y);
+            KillTheAll(field);
+        }
     }
 }
