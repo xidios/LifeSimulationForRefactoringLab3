@@ -10,13 +10,13 @@ namespace LifeS
     class Map
     {
         private Cell[,] field;
-        public List<Event> mapEvents=new List<Event>();
-        public readonly int rows=1000;
-        public readonly int cols=1000;
+        public List<Event> mapEvents = new List<Event>();
+        public readonly int rows = 1000;
+        public readonly int cols = 1000;
         Random random = new Random();
 
         public int CurrentGeneration { get; private set; }
-        public int TotalOfAnimals { get;  set; }
+        public int TotalOfAnimals { get; set; }
 
 
         public Map(int rows, int cols, int density)
@@ -27,12 +27,12 @@ namespace LifeS
             for (int x = 0; x < cols; x++)
             {
                 for (int y = 0; y < rows; y++)
-                {                   
+                {
                     field[x, y] = new Cell(cols, rows);
                     CreateAnimal<Herbivore>(x, y, density);
-                    CreateAnimal<Omnivore>(x, y, density*4);
-                    CreateAnimal<Predator>(x, y, density*5);
-                    CreatePlant(x, y, density);                                       
+                    CreateAnimal<Omnivore>(x, y, density * 4);
+                    CreateAnimal<Predator>(x, y, density * 5);
+                    CreatePlant(x, y, density);
                 }
             }
             CurrentGeneration++;
@@ -46,9 +46,10 @@ namespace LifeS
                 field[x, y].entity.Add(animal);
                 field[x, y].animals.Add(animal);
             }
-        }       
-        private void CreatePlant(int x, int y, int density) {
-            if (random.Next(density/2) == 0)
+        }
+        private void CreatePlant(int x, int y, int density)
+        {
+            if (random.Next(density / 2) == 0)
             {
                 field[x, y].plant = new Plant(x, y);
                 field[x, y].entity.Add(field[x, y].plant);
@@ -72,21 +73,18 @@ namespace LifeS
                     }
                 }
             }
-            
+
             CheckedToFalse();
             return field;
         }
-        private void UpdateCellInformation(int x,int y)
+        private void UpdateCellInformation(int x, int y)
         {
             UpdateAnimalsInfo(x, y);
-            
             for (int i = 0; i < field[x, y].entity.Count(); i++)
             {
                 if (field[x, y].entity.Count() > 0 && field[x, y].entity[i] != null && field[x, y].entity[i] is Animal)
                 {
-                    
-                    Animal a = null;
-                    a = (Animal)field[x, y].entity[i];
+                    Animal a = (Animal)field[x, y].entity[i];
                     if (!a.changed)
                     {
                         a.DoSomething(field.GetLength(0), field.GetLength(1), field);
@@ -95,16 +93,13 @@ namespace LifeS
                         field[a.x, a.y].animals.Add(a);
                         field[x, y].animals.Remove(a);
                     }
-
                 }
             }
-
-
         }
         public Animal GetHuman(int _x, int _y)
         {
             if (field[_x, _y].animals.Count > 0)
-                return field[_x, _y].animals[0];          
+                return field[_x, _y].animals[0];
             return null;
         }
         private void CheckedToFalse()
@@ -130,7 +125,7 @@ namespace LifeS
 
             if (field[x, y].plant == null)
             {
-                
+
                 int countPlantsAround = 0;
                 CheckNeighborPlants(x - 1, y, ref countPlantsAround);
                 CheckNeighborPlants(x, y - 1, ref countPlantsAround);
@@ -143,9 +138,9 @@ namespace LifeS
                 }
             }
         }
-        private void CheckNeighborPlants(int x,int y, ref int count)
+        private void CheckNeighborPlants(int x, int y, ref int count)
         {
-            if (x>= 0 && x<field.GetLength(0) && y >= 0 && y < field.GetLength(1) && field[x, y].plant != null)
+            if (x >= 0 && x < field.GetLength(0) && y >= 0 && y < field.GetLength(1) && field[x, y].plant != null)
             {
                 count++;
             }
@@ -156,7 +151,7 @@ namespace LifeS
             {
                 field[x, y].entity.Remove(field[x, y].plant);
                 field[x, y].plant = null;
-                
+
             }
         }
 
@@ -177,10 +172,10 @@ namespace LifeS
                         field[x, y].entity.Remove(a);
                         field[x, y].animals.Remove(a);
                     }
-                   
+
                 }
             }
-           
+
         }
 
         private void StartEvent()
@@ -205,7 +200,7 @@ namespace LifeS
 
         public void CreateEventByMouse(int x, int y)
         {
-            Event ev = new Event(random,field);
+            Event ev = new Event(random, field);
             mapEvents.Add(ev);
             ev.MouseEvent(x, y, field);
         }
