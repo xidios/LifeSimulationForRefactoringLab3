@@ -193,7 +193,7 @@ namespace LifeS
             }
             foreach (Event e in mapEvents)
             {
-                if (e.exist)
+                if (e.EventIsExist())
                 {
                     e.KillTheAll(field);
                     _mapEvents.Add(e);

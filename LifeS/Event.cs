@@ -8,12 +8,13 @@ namespace LifeS
 {
     public class Event
     {
-        public bool exist = false;
+        private bool exist = false;
         public int x;
         public int y;
         int distanse;
         Random rand;
         Direction direction;
+        public bool EventIsExist() => exist;
         public Event(Random random, Cell[,] field)
         {
             exist = true;

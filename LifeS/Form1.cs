@@ -127,7 +127,7 @@ namespace LifeS
             if (gameEngine.mapEvents != null)
             {
                 foreach (Event e in gameEngine.mapEvents)
-                    if (e.exist)
+                    if (e.EventIsExist())
                         graphics.FillRectangle(Brushes.Gold, e.x * resolution, e.y * resolution, resolution, resolution);
             }
         }
