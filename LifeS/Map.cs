@@ -21,7 +21,6 @@ namespace LifeS
 
         public Map(int rows, int cols, int density)
         {
-            Random random = new Random();//
             this.rows = rows;
             this.cols = cols;
             field = new Cell[cols, rows];
@@ -30,12 +29,9 @@ namespace LifeS
                 for (int y = 0; y < rows; y++)
                 {                   
                     field[x, y] = new Cell(cols, rows);
-                    //CreateAnimal<Herbivore>(x, y, density);
-                    //CreateAnimal<Omnivore>(x, y, density*4);
-                    //CreateAnimal<Predator>(x, y, density*5);
-                    CreateHerbivore(x, y, density);
-                    CreateOmnivore(x, y, density);
-                    CreatePredator(x, y, density);
+                    CreateAnimal<Herbivore>(x, y, density);
+                    CreateAnimal<Omnivore>(x, y, density*4);
+                    CreateAnimal<Predator>(x, y, density*5);
                     CreatePlant(x, y, density);                                       
                 }
             }
@@ -50,31 +46,7 @@ namespace LifeS
                 field[x, y].entity.Add(animal);
                 field[x, y].animals.Add(animal);
             }
-        }
-        private void CreateHerbivore(int x,int y,int density) {
-            if (random.Next(density) == 0)
-            {
-                Herbivore rand = new Herbivore(x, y, random);
-                field[x, y].entity.Add(rand);
-                field[x, y].animals.Add(rand);
-            }
-        }
-        private void CreateOmnivore(int x, int y, int density){
-            if (random.Next(density * 4) == 0)
-            {
-                Omnivore rand = new Omnivore(x, y, random);
-                field[x, y].entity.Add(rand);
-                field[x, y].animals.Add(rand);
-            }
-        }
-        private void CreatePredator(int x, int y, int density) {
-            if (random.Next(density * 5) == 0)
-            {
-                Predator rand = new Predator(x, y, random);
-                field[x, y].entity.Add(rand);
-                field[x, y].animals.Add(rand);
-            }
-        }
+        }       
         private void CreatePlant(int x, int y, int density) {
             if (random.Next(density/2) == 0)
             {
