@@ -191,33 +191,43 @@ namespace LifeS
         {
             if (e.Button == MouseButtons.Left)
             {
-                int x = e.Location.X /resolution;
-                int y = e.Location.Y /resolution;
-                observedHuman = gameEngine.GetHuman(x, y);
-                if (observedHuman != null) {
-                    humanSatiety.Text = $"Satiety: {observedHuman.satiety}";
-                    status.Text = $"Status: {((observedHuman.satiety == 0) ? "Dead" : "Alive")}";// $"{x} {y}"                 
-                    labelTimeChild.Text = $"Time from last child: {observedHuman.timeLastChild}";
-                    sex.Text = $"Sex: {((observedHuman.gender == Gender.male) ? "Male" : "Female")}";
-                    animalType.Text = $"Type: {observedHuman.GetType().Name}";
-                    
-                }
-                else
-                {
-                    animalType.Text = null;
-                    labelTimeChild.Text = null;
-                    humanSatiety.Text = null;
-                    status.Text = null;
-                    sex.Text = null;
-                }
+                MouseLeftClickObservedAnimal(e);
             }
             if (e.Button == MouseButtons.Right)
             {
-                int x = e.Location.X / resolution;
-                int y = e.Location.Y / resolution;
-                gameEngine.CreateEvent(x, y);
-                
+                MouseRightClickCreateEvent(e);
             }
+        }
+
+        private void MouseLeftClickObservedAnimal(MouseEventArgs e)
+        {
+            int x = e.Location.X / resolution;
+            int y = e.Location.Y / resolution;
+            observedHuman = gameEngine.GetHuman(x, y);
+            if (observedHuman != null)
+            {
+                humanSatiety.Text = $"Satiety: {observedHuman.satiety}";
+                status.Text = $"Status: {((observedHuman.satiety == 0) ? "Dead" : "Alive")}";// $"{x} {y}"                 
+                labelTimeChild.Text = $"Time from last child: {observedHuman.timeLastChild}";
+                sex.Text = $"Sex: {((observedHuman.gender == Gender.male) ? "Male" : "Female")}";
+                animalType.Text = $"Type: {observedHuman.GetType().Name}";
+
+            }
+            else
+            {
+                animalType.Text = null;
+                labelTimeChild.Text = null;
+                humanSatiety.Text = null;
+                status.Text = null;
+                sex.Text = null;
+            }
+        }
+        private void MouseRightClickCreateEvent(MouseEventArgs e)
+        {
+
+            int x = e.Location.X / resolution;
+            int y = e.Location.Y / resolution;
+            gameEngine.CreateEvent(x, y);
         }
     }
 
