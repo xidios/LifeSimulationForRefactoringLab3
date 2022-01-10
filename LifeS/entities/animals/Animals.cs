@@ -172,7 +172,7 @@ namespace LifeS
             return Direction.None;
         }
 
-        private void EatSmth(int _x, int _y, Entity en)
+        private void EatSmth(Entity en)
         {
             if (en is Plant)
             {
@@ -198,7 +198,7 @@ namespace LifeS
 
             if (direction == Direction.SamePosition && type == TypeOfTarget.ForFood)
             {
-                EatSmth(x, y, en);
+                EatSmth(en);
                 return;
             }
 
