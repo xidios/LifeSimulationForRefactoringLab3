@@ -13,8 +13,8 @@ namespace LifeS
         {
 
         }
-        
-        public Entity CheckTarget<Target>(int _x, int _y, ref Cell[,] field,TypeOfTarget type)
+
+        public Entity CheckTarget<Target>(int _x, int _y, ref Cell[,] field, TypeOfTarget type)
         {
             int tempX = x + _x;
             int tempY = y + _y;
@@ -34,12 +34,12 @@ namespace LifeS
         }
         private Entity ForeachForReproduction<Target>(int _x, int _y, ref Cell[,] field)
         {
-            foreach(Entity e in field[_x, _y].entity)
+            foreach (Entity e in field[_x, _y].entity)
             {
                 if (e is Animal && e is T)
                 {
                     Animal a = (Animal)e;
-                    if ( gender != a.gender && a.satiety >= 50 && a.timeLastChild == 0)
+                    if (gender != a.gender && a.satiety >= 50 && a.timeLastChild == 0)
                     {
                         return a;
                     }
@@ -56,7 +56,7 @@ namespace LifeS
             }
             return null;
         }
-        
+
         private Entity FindTarget<Target>(ref Cell[,] field, TypeOfTarget type)
         {
             int visibility = viewDistance;
@@ -66,14 +66,14 @@ namespace LifeS
                 //свверхе погоризнтали
                 for (int x = -i, y = x; x <= i; x++)
                 {
-                    target = CheckTarget<Target>(x, y, ref field,type);
+                    target = CheckTarget<Target>(x, y, ref field, type);
                     if (target != null)
                         return target;
                 }
                 //свнизу по горизонтали
                 for (int x = -i, y = -x; x <= i; x++)
                 {
-                    target = CheckTarget<Target>(x, y, ref field,type);
+                    target = CheckTarget<Target>(x, y, ref field, type);
                     if (target != null)
                         return target;
 
@@ -82,7 +82,7 @@ namespace LifeS
                 //слева вертикально
                 for (int y = -i + 1, x = -i; y < i; y++)
                 {
-                    target = CheckTarget<Target>(x, y, ref field,type);
+                    target = CheckTarget<Target>(x, y, ref field, type);
                     if (target != null)
                         return target;
 
@@ -91,7 +91,7 @@ namespace LifeS
                 //справа вертикально
                 for (int y = -i + 1, x = i; y < i; y++)
                 {
-                    target = CheckTarget<Target>(x, y, ref field,type);
+                    target = CheckTarget<Target>(x, y, ref field, type);
                     if (target != null)
                         return target;
 
@@ -188,38 +188,42 @@ namespace LifeS
 
         private void SearchTarget<Target>(Cell[,] field, TypeOfTarget type)
         {
-
-            Entity en = null;//
-
-            en = FindTarget<Target>(ref field, type);
+            Entity en = FindTarget<Target>(ref field, type);
 
             Direction direction = Direction.None;
             if (en != null)
+            {
                 direction = MoveToTarget(en, x, y);
+            }
+
             if (direction == Direction.SamePosition && type == TypeOfTarget.ForFood)
             {
                 EatSmth(x, y, en);
+                return;
             }
+
             if (direction == Direction.SamePosition && type == TypeOfTarget.ForReproduction)
             {
                 DoChild(x, y, field, en);
 
             }
-            else
-            {
-                if (direction == Direction.None)
-                    PanicMove(field.GetLength(0), field.GetLength(1));
-                else
-                    Move(field.GetLength(0), field.GetLength(1), direction);
 
+            if (direction == Direction.None)
+            {
+                PanicMove(field.GetLength(0), field.GetLength(1));
+                return;
             }
+
+            Move(field.GetLength(0), field.GetLength(1), direction);
+
+
         }
         public override void DoSomething(int _x, int _y, Cell[,] field)
         {
 
             if (satiety <= 50)
             {
-                SearchTarget<TFood>(field,TypeOfTarget.ForFood);
+                SearchTarget<TFood>(field, TypeOfTarget.ForFood);
 
             }
             else if (satiety >= 70 && timeLastChild == 0)
@@ -243,7 +247,7 @@ namespace LifeS
         private void DoChild(int _x, int _y, Cell[,] field, Entity h)
         {
 
-            Animal child = (Animal)Activator.CreateInstance(typeof(T), _x, _y, random);            
+            Animal child = (Animal)Activator.CreateInstance(typeof(T), _x, _y, random);
             child.changed = true;
             Animal parent = (Animal)h;
             field[_x, _y].animals.Add(child);
@@ -251,7 +255,7 @@ namespace LifeS
             parent.timeLastChild = 150;
             timeLastChild = 200;
         }
-        
+
 
     }
 }
